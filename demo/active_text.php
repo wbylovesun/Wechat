@@ -3,6 +3,7 @@ require_once 'autoload.php';
 
 use Wechat\Response\Active\Text;
 
+
 $text = new Text();
 $token = '';
 $result = $text->setAccessToken($token)

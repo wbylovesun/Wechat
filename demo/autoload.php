@@ -1,5 +1,5 @@
 <?php
-set_include_path('..' . PATH_SEPARATOR . get_include_path());
+set_include_path('../src' . PATH_SEPARATOR . get_include_path());
 
 spl_autoload_register(function($class) {
     $class = str_replace('\\', '/', $class) . '.php';

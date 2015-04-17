@@ -1,0 +1,20 @@
+{
+    "name": "listong/wechat",
+    "description": "Use composer to manager vendor dependencies.",
+    "require": {
+        "php":">=5.3.9",
+        "guzzle/guzzle": "~3.9.2",
+        "symfony/event-dispatcher": "~2.6"
+    },
+    "license": "GNU",
+    "autoload": {
+        "psr-0": { "Wechat": "src/" }
+    },
+    "authors": [
+        {
+            "name": "wbylovesun",
+            "email": "sunme87@163.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
