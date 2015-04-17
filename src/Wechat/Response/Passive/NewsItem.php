@@ -44,21 +44,21 @@ class NewsItem
     {
         $hasTag = false;
         $tagXml = $partialXml = "";
-        if ($item->getTitle()) {
+        if ($this->getTitle()) {
             $hasTag = true;
-            $tagXml .= "\t<Title><![CDATA[" . $item->getTitle() . "]]></Title>\n";
+            $tagXml .= "\t<Title><![CDATA[" . $this->getTitle() . "]]></Title>\n";
         }
-        if ($item->getDescription()) {
+        if ($this->getDescription()) {
             $hasTag = true;
-            $tagXml .= "\t<Description><![CDATA[" . $item->getDescription() . "]]></Description>\n";
+            $tagXml .= "\t<Description><![CDATA[" . $this->getDescription() . "]]></Description>\n";
         }
-        if ($item->getPicUrl()) {
+        if ($this->getPicUrl()) {
             $hasTag = true;
-            $tagXml .= "\t<PicUrl><![CDATA[" . $item->getPicUrl() . "]]></PicUrl>\n";
+            $tagXml .= "\t<PicUrl><![CDATA[" . $this->getPicUrl() . "]]></PicUrl>\n";
         }
-        if ($item->getUrl()) {
+        if ($this->getUrl()) {
             $hasTag = true;
-            $tagXml .= "\t<Url><![CDATA[" . $item->getUrl() . "]]></Url>\n";
+            $tagXml .= "\t<Url><![CDATA[" . $this->getUrl() . "]]></Url>\n";
         }
         if ($hasTag) {
             $partialXml = "<item>\n" . $tagXml . "</item>";

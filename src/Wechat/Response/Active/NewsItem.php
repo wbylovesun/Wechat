@@ -43,17 +43,17 @@ class NewsItem
     public function toArray()
     {
         $arrProperties = array();
-        if ($item->getTitle()) {
+        if ($this->getTitle()) {
             $arrProperties['title'] = $this->getTitle();
         }
-        if ($item->getDescription()) {
-            $arrProperties['title'] = $this->getDescription();
+        if ($this->getDescription()) {
+            $arrProperties['description'] = $this->getDescription();
         }
-        if ($item->getPicUrl()) {
-            $arrProperties['title'] = $this->getPicUrl();
+        if ($this->getPicUrl()) {
+            $arrProperties['picurl'] = $this->getPicUrl();
         }
-        if ($item->getUrl()) {
-            $arrProperties['title'] = $this->getUrl();
+        if ($this->getUrl()) {
+            $arrProperties['url'] = $this->getUrl();
         }
         return $arrProperties;
     }
