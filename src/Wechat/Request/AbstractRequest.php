@@ -5,6 +5,8 @@ use SimpleXMLElement;
 
 abstract class AbstractRequest
 {
+    const EVENT_KEY = 'event';
+    
     protected $root         = null;
     
     protected $serviceProvider = null;
@@ -65,6 +67,11 @@ abstract class AbstractRequest
     public function getMsgType()
     {
         return $this->msgType;
+    }
+    
+    public function isEvent()
+    {
+        return $this->msgType === self::EVENT_KEY;
     }
     
     protected function setRequestParams(SimpleXMLElement $params)

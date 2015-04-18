@@ -3,7 +3,23 @@ namespace Wechat\Request;
 
 class MessageFactory
 {
+    private static $_root, $_type, $_event, $_evtKey;
+    
     public static function create()
+    {
+        self::load();
+        
+        $message = null;
+        if (self::$_event) {
+            $message = self::dispatchEvent();
+        } else {
+            $message = self::dispatchMessage();
+        }
+        
+        return $message;
+    }
+    
+    private static function load()
     {
         $data = '';
         $f = fopen("php://input", "r");
@@ -21,62 +37,62 @@ class MessageFactory
         if (!$roots) {
             throw new Exception\InvalidXmlException("invalid xml format");
         }
-        $root   = $roots[0];
-        $type   = strtolower((string) $root->MsgType);
-        $event  = strtolower((string) $root->Event);
-        $evtkey = (string) $root->EventKey;
-        
-        if ($event) {
-            // Event
-            switch ($event) {
-                case 'subscribe':
-                    if ($evtkey) {
-                        // subscribe event through qrscene scaning
-                        return new Event\QrScene($root);
-                    } else {
-                        // only subscribe event
-                        return new Event\Subscribe($root);
-                    }
-                break;
-                case 'unsubscribe':
-                    // unsubscribe event
-                    return new Event\Unsubscribe($root);
-                break;
-                case 'scan':
-                    // qrscene scan triggers in attention status
-                    return new Event\Scan($root);
-                break;
-                case 'location':
-                    return new Event\Geo($root);
-                break;
-                case 'click':
-                    return new Event\CustomMenu($root);
-                break;
-            }
-        } else {
-            // Msg
-            switch ($type) {
-                case 'text':
-                    return new Message\Text($root);
-                break;
-                case 'image':
-                    return new Message\Image($root);
-                break;
-                case 'voice':
-                    return new Message\Voice($root);
-                break;
-                case 'video':
-                    return new Message\Video($root);
-                break;
-                case 'location':
-                    return new Message\Location($root);
-                break;
-                case 'link':
-                    return new Message\Link($root);
-                break;
-            }
+        self::$_root   = $roots[0];
+        self::$_type   = strtolower((string) $root->MsgType);
+        self::$_event  = strtolower((string) $root->Event);
+        self::$_evtkey = (string) $root->EventKey;
+    }
+    
+    private static function dispatchEvent()
+    {
+        switch (self::$_event) {
+            case 'subscribe':
+                if (self::$_evtkey) {
+                    // subscribe event through qrscene scaning
+                    return new Event\QrScene(self::$_root);
+                } else {
+                    // only subscribe event
+                    return new Event\Subscribe(self::$_root);
+                }
+            break;
+            case 'unsubscribe':
+                // unsubscribe event
+                return new Event\Unsubscribe(self::$_root);
+            break;
+            case 'scan':
+                // qrscene scan triggers in attention status
+                return new Event\Scan(self::$_root);
+            break;
+            case 'location':
+                return new Event\Geo(self::$_root);
+            break;
+            case 'click':
+                return new Event\CustomMenu(self::$_root);
+            break;
         }
-        
-        throw new Exception\UnknownXmlException("Unsupported Message");
+    }
+    
+    private static function dispatchMessage()
+    {
+        switch (self::$_type) {
+            case 'text':
+                return new Message\Text(self::$_root);
+            break;
+            case 'image':
+                return new Message\Image(self::$_root);
+            break;
+            case 'voice':
+                return new Message\Voice(self::$_root);
+            break;
+            case 'video':
+                return new Message\Video(self::$_root);
+            break;
+            case 'location':
+                return new Message\Location(self::$_root);
+            break;
+            case 'link':
+                return new Message\Link(self::$_root);
+            break;
+        }
     }
 }
