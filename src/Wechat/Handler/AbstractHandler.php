@@ -31,6 +31,7 @@ class AbstractHandler implements HandlerInterface
             if (!is_callable($handler)) continue;
             $this->arrEventHandlerMapper[$event] = $handler;
         }
+        return $this;
     }
     
     public function setMessageHandlerMapper($mapper)
@@ -39,6 +40,7 @@ class AbstractHandler implements HandlerInterface
             if (!is_callable($handler)) continue;
             $this->arrMessageHandlerMapper[$msgType] = $handler;
         }
+        return $this;
     }
     
     protected function hasHandler(AbstractRequest $request)
