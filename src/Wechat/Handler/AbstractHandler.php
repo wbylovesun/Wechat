@@ -5,25 +5,31 @@ use Wechat\Request\AbstractRequest;
 use Wechat\Request\Event\AbstractEvent;
 use Wechat\Request\Message\AbstractMessage;
 
-class AbstractHandler implements HandlerInterface
+abstract class AbstractHandler implements HandlerInterface
 {
-    protected $arrEventHandlerMapper = [
-        'subscribe'   => [$this, 'handleSubscribe'],
-        'unsubscribe' => [$this, 'handleUnSubscribe'],
-        'scan'        => [$this, 'handleScan'],
-        'location'    => [$this, 'handleLocationEvent'],
-        'click'       => [$this, 'handleClick'],
-    ];
-    protected $arrMessageHandlerMapper = [
-        'text'        => [$this, 'handleText'],
-        'image'       => [$this, 'handleImage'],
-        'link'        => [$this, 'handleLink'],
-        'video'       => [$this, 'handleVideo'],
-        'voice'       => [$this, 'handleAudio'],
-        'location'    => [$this, 'handleLocationMessage'],
-    ];
+    protected $arrEventHandlerMapper = [];
+    protected $arrMessageHandlerMapper = [];
     
     abstract public function handle(AbstractRequest $request);
+    
+    public function __construct()
+    {
+        $this->arrEventHandlerMapper = [
+            'subscribe'   => [$this, 'handleSubscribe'],
+            'unsubscribe' => [$this, 'handleUnSubscribe'],
+            'scan'        => [$this, 'handleScan'],
+            'location'    => [$this, 'handleLocationEvent'],
+            'click'       => [$this, 'handleClick'],
+        ];
+        $this->arrMessageHandlerMapper = [
+            'text'        => [$this, 'handleText'],
+            'image'       => [$this, 'handleImage'],
+            'link'        => [$this, 'handleLink'],
+            'video'       => [$this, 'handleVideo'],
+            'voice'       => [$this, 'handleAudio'],
+            'location'    => [$this, 'handleLocationMessage'],
+        ];
+    }
     
     public function setEventHandleMapper($mapper)
     {
@@ -45,14 +51,16 @@ class AbstractHandler implements HandlerInterface
     
     protected function hasHandler(AbstractRequest $request)
     {
+        $type = $request->getMsgType();
         $arrHandlerMapper = $this->getHandlerMapper($request);
         return isset($arrHandlerMapper[$type]) && is_callable($arrHandlerMapper[$type]);
     }
     
     protected function callHandler(AbstractRequest $request)
     {
+        $type = $request->getMsgType();
         $arrHandlerMapper = $this->getHandlerMapper($request);
-        return call_user_func_array($this->arrHandlerMapper[$type], [$request]);
+        return call_user_func_array($arrHandlerMapper[$type], [$request]);
     }
     
     private function getHandlerMapper(AbstractRequest $request)

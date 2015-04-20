@@ -2,11 +2,12 @@
 require_once 'autoload.php';
 
 use Wechat\Wechat;
+use Wechat\Response\Passive\Text;
 
 $wechat = new Wechat();
-$wechat->getHandler()->setMessageHandlerMapper([
-    'text' => 'handleText',
-]);
+//$wechat->getHandler()->setMessageHandlerMapper([
+//    'text' => 'handleText',
+//]);
 $wechat->handle();
 
 function handleText($request)
@@ -21,6 +22,6 @@ function handleText($request)
     $textResp = new Text();
     echo $textResp->setMessageReceiver($request->getMessageTrigger())
                   ->setMessageSender($request->getServiceProvider())
-                  ->setText($response)
+                  ->setContent($response)
                   ->generateXml();
 }

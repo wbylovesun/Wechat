@@ -26,6 +26,7 @@ class MessageFactory
         while ($s = fgets($f, 1024)) {
             $data .= $s;
         }
+        /*$data = '<xml><ToUserName><![CDATA[airnet_mk]]></ToUserName><FromUserName><![CDATA[oh-Zxt-XCKQj1-aiBNGhMMepXg7Y]]></FromUserName><CreateTime>1429268143</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[abcdefg]]></Content><MsgId>234141234123413241234214122414</MsgId></xml>';*/
         if (!$data) {
             throw new Exception\InvalidXmlException("invalid data while reading");
         }
@@ -38,16 +39,16 @@ class MessageFactory
             throw new Exception\InvalidXmlException("invalid xml format");
         }
         self::$_root   = $roots[0];
-        self::$_type   = strtolower((string) $root->MsgType);
-        self::$_event  = strtolower((string) $root->Event);
-        self::$_evtkey = (string) $root->EventKey;
+        self::$_type   = strtolower((string) self::$_root->MsgType);
+        self::$_event  = strtolower((string) self::$_root->Event);
+        self::$_evtKey = (string) self::$_root->EventKey;
     }
     
     private static function dispatchEvent()
     {
         switch (self::$_event) {
             case 'subscribe':
-                if (self::$_evtkey) {
+                if (self::$_evtKey) {
                     // subscribe event through qrscene scaning
                     return new Event\QrScene(self::$_root);
                 } else {

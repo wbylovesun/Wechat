@@ -12,13 +12,14 @@ class Wechat
     public function handle()
     {
         $message = Message::create();
-        $this->handler->handle($message);
+        $this->getHandler()->handle($message);
     }
     
     public function getHandler()
     {
         if (!$this->handler) {
-            $this->handler = $this->setHandler(new Handler());
+            $this->handler = new Handler();
+            $this->setHandler($this->handler);
         }
         return $this->handler;
     }

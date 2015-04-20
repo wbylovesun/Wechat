@@ -3,7 +3,7 @@ namespace Wechat\Handler;
 
 use Wechat\Request\AbstractRequest;
 
-class HandlerInterface
+interface HandlerInterface
 {
     public function handle(AbstractRequest $request);
 }

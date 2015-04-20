@@ -1,6 +1,8 @@
 <?php
 namespace Wechat\Handler;
 
+use Wechat\Request\AbstractRequest;
+
 class Handler extends AbstractHandler
 {
     public function handle(AbstractRequest $event)
