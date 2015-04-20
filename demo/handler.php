@@ -5,9 +5,9 @@ use Wechat\Wechat;
 use Wechat\Response\Passive\Text;
 
 $wechat = new Wechat();
-//$wechat->getHandler()->setMessageHandlerMapper([
-//    'text' => 'handleText',
-//]);
+$wechat->getHandler()->setMessageHandlerMapper([
+    'text' => 'handleText',
+]);
 $wechat->handle();
 
 function handleText($request)

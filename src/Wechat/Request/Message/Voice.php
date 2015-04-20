@@ -7,6 +7,15 @@ class Voice extends AbstractMessage
     protected $mediaId     = null;
     protected $recognition = null;
     
+    protected function fields()
+    {
+        $arrFields = parent::fields();
+        $arrFields['Format']      = 'setFormat';
+        $arrFields['MediaId']     = 'setMediaId';
+        $arrFields['Recognition'] = 'setRecognition';
+        return $arrFields;
+    }
+    
     protected function setFormat($format)
     {
         $this->format = (string) $format;
@@ -38,35 +47,5 @@ class Voice extends AbstractMessage
     public function getRecognition()
     {
         return $this->recognition;
-    }
-    
-    protected function setRequestParam($param, $element)
-    {
-        switch ($param) {
-            case 'ToUserName':
-                $this->setServiceProvider($element);
-            break;
-            case 'FromUserName':
-                $this->setMessageTrigger($element);
-            break;
-            case 'CreateTime':
-                $this->setCreateTime($element);
-            break;
-            case 'MsgType':
-                $this->setMsgType($element);
-            break;
-            case 'Format':
-                $this->setFormat($element);
-            break;
-            case 'MediaId':
-                $this->setMediaId($element);
-            break;
-            case 'Recognition':
-                $this->setRecognition($element);
-            break;
-            case 'MsgId':
-                $this->setMessageId($element);
-            break;
-        }
     }
 }

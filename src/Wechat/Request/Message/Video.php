@@ -6,6 +6,14 @@ class Video extends AbstractMessage
     protected $thumbMediaId = null;
     protected $mediaId      = null;
     
+    protected function fields()
+    {
+        $arrFields = parent::fields();
+        $arrFields['ThumbMediaId']  = 'setThumbMediaId';
+        $arrFields['MediaId']       = 'setMediaId';
+        return $arrFields;
+    }
+    
     protected function setThumbMediaId($thumbMediaId)
     {
         $this->thumbMediaId = (string) $thumbMediaId;
@@ -26,32 +34,5 @@ class Video extends AbstractMessage
     public function getMediaId()
     {
         return $this->mediaId;
-    }
-    
-    protected function setRequestParam($param, $element)
-    {
-        switch ($param) {
-            case 'ToUserName':
-                $this->setServiceProvider($element);
-            break;
-            case 'FromUserName':
-                $this->setMessageTrigger($element);
-            break;
-            case 'CreateTime':
-                $this->setCreateTime($element);
-            break;
-            case 'MsgType':
-                $this->setMsgType($element);
-            break;
-            case 'ThumbMediaId':
-                $this->setThumbMediaId($element);
-            break;
-            case 'MediaId':
-                $this->setMediaId($element);
-            break;
-            case 'MsgId':
-                $this->setMessageId($element);
-            break;
-        }
     }
 }

@@ -74,15 +74,43 @@ abstract class AbstractRequest
         return $this->msgType === self::EVENT_KEY;
     }
     
+    public function __set($name, $value)
+    {
+        if (isset($this->$name)) {
+            $this->$name = $value;
+            return true;
+        }
+        $method = 'set' . ucfirst($name);
+        if (method_exists($this, $method)) {
+            $this->$method($value);
+            return true;
+        }
+        throw new \LogicException('Unknown property "' . $name . '"');
+    }
+    
     protected function setRequestParams(SimpleXMLElement $params)
     {
-        if ($params instanceof SimpleXMLElement)
-        {
+        $arrFields = $this->fields();
+        if ($params instanceof SimpleXMLElement) {
             foreach ($params as $param => $element) {
-                $this->setRequestParam($param, $element);
+                if (method_exists($this, $arrFields[$param])) {
+                    $method = $arrFields[$param];
+                    $this->$method($element);
+                } elseif (property_exists($this, $param)) {
+                    $this->$param = $element;
+                }
             }
         }
     }
     
-    abstract protected function setRequestParam($param, $element);
+    // Used for initialize $arrFieldMappers or other initialization work.
+    protected function fields()
+    {
+        return [
+            'ToUserName'   => 'setServiceProvider',
+            'FromUserName' => 'setMessageTrigger',
+            'CreateTime'   => 'setCreateTime',
+            'MsgType'      => 'setMsgType',
+        ];
+    }
 }

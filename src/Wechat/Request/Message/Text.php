@@ -5,6 +5,13 @@ class Text extends AbstractMessage
 {
     protected $content = null;
     
+    protected function fields()
+    {
+        $arrFields = parent::fields();
+        $arrFields['Content'] = 'setContent';
+        return $arrFields;
+    }
+    
     protected function setContent($content)
     {
         $this->content = (string) $content;
@@ -14,29 +21,5 @@ class Text extends AbstractMessage
     public function getContent()
     {
         return $this->content;
-    }
-    
-    protected function setRequestParam($param, $element)
-    {
-        switch ($param) {
-            case 'ToUserName':
-                $this->setServiceProvider($element);
-            break;
-            case 'FromUserName':
-                $this->setMessageTrigger($element);
-            break;
-            case 'CreateTime':
-                $this->setCreateTime($element);
-            break;
-            case 'MsgType':
-                $this->setMsgType($element);
-            break;
-            case 'Content':
-                $this->setContent($element);
-            break;
-            case 'MsgId':
-                $this->setMessageId($element);
-            break;
-        }
     }
 }

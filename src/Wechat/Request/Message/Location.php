@@ -8,6 +8,16 @@ class Location extends AbstractMessage
     protected $scale     = null;
     protected $label     = null;
     
+    protected function fields()
+    {
+        $arrFields = parent::fields();
+        $arrFields['Location_X'] = 'setLocationX';
+        $arrFields['Location_Y'] = 'setLocationY';
+        $arrFields['Scale']      = 'setScale';
+        $arrFields['Label']      = 'setLabel';
+        return $arrFields;
+    }
+    
     protected function setLocationX($locationX)
     {
         $this->locationX = (string) $locationX;
@@ -50,38 +60,5 @@ class Location extends AbstractMessage
     public function getLabel()
     {
         return $this->label;
-    }
-    
-    protected function setRequestParam($param, $element)
-    {
-        switch ($param) {
-            case 'ToUserName':
-                $this->setServiceProvider($element);
-            break;
-            case 'FromUserName':
-                $this->setMessageTrigger($element);
-            break;
-            case 'CreateTime':
-                $this->setCreateTime($element);
-            break;
-            case 'MsgType':
-                $this->setMsgType($element);
-            break;
-            case 'Location_X':
-                $this->setLocationX($element);
-            break;
-            case 'Location_Y':
-                $this->setLocationY($element);
-            break;
-            case 'Scale':
-                $this->setScale($element);
-            break;
-            case 'Label':
-                $this->setLabel($element);
-            break;
-            case 'MsgId':
-                $this->setMessageId($element);
-            break;
-        }
     }
 }

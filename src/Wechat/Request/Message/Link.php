@@ -7,6 +7,15 @@ class Link extends AbstractMessage
     protected $description = null;
     protected $url         = null;
     
+    protected function fields()
+    {
+        $arrFields = parent::fields();
+        $arrFields['Title']       = 'setTitle';
+        $arrFields['Description'] = 'setDescription';
+        $arrFields['Url']         = 'setUrl';
+        return $arrFields;
+    }
+    
     protected function setTitle($title)
     {
         $this->title = (string) $title;
@@ -38,35 +47,5 @@ class Link extends AbstractMessage
     public function getUrl()
     {
         return $this->url;
-    }
-    
-    protected function setRequestParam($param, $element)
-    {
-        switch ($param) {
-            case 'ToUserName':
-                $this->setServiceProvider($element);
-            break;
-            case 'FromUserName':
-                $this->setMessageTrigger($element);
-            break;
-            case 'CreateTime':
-                $this->setCreateTime($element);
-            break;
-            case 'MsgType':
-                $this->setMsgType($element);
-            break;
-            case 'Title':
-                $this->setTitle($element);
-            break;
-            case 'Description':
-                $this->setDescription($element);
-            break;
-            case 'Url':
-                $this->setUrl($element);
-            break;
-            case 'MsgId':
-                $this->setMessageId($element);
-            break;
-        }
     }
 }

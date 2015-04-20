@@ -15,6 +15,13 @@ abstract class AbstractEvent extends AbstractRequest
         return $this;
     }
     
+    public function fields()
+    {
+        $arrFields = parent::fields();
+        $arrFields['Event'] = 'event';
+        return $arrFields;
+    }
+    
     public function getEvent()
     {
         return $this->event;

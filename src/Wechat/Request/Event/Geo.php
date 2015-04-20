@@ -3,9 +3,16 @@ namespace Wechat\Request\Event;
 
 class Geo extends AbstractEvent
 {
-    protected $latitude  = null;
-    protected $longitude = null;
-    protected $precision = null;
+    protected $latitude  = null, $longitude = null, $precision = null;
+    
+    protected function fields()
+    {
+        $arrFields = parent::fields();
+        $arrFields['Latitude']  = 'setLatitude';
+        $arrFields['Longitude'] = 'setLongitude';
+        $arrFields['Precision'] = 'setPrecision';
+        return $arrFields;
+    }
     
     protected function setLatitude($latitude)
     {
@@ -38,35 +45,5 @@ class Geo extends AbstractEvent
     public function getPrecision()
     {
         return $this->precision;
-    }
-    
-    protected function setRequestParam($param, $element)
-    {
-        switch ($param) {
-            case 'ToUserName':
-                $this->setServiceProvider($element);
-            break;
-            case 'FromUserName':
-                $this->setMessageTrigger($element);
-            break;
-            case 'CreateTime':
-                $this->setCreateTime($element);
-            break;
-            case 'MsgType':
-                $this->setMsgType($element);
-            break;
-            case 'Event':
-                $this->setEvent($element);
-            break;
-            case 'Latitude':
-                $this->setLatitude($element);
-            break;
-            case 'Longitude':
-                $this->setLongitude($element);
-            break;
-            case 'Precision':
-                $this->setPrecision($element);
-            break;
-        }
     }
 }

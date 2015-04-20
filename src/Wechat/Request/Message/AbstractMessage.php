@@ -7,6 +7,13 @@ abstract class AbstractMessage extends AbstractRequest
 {
     protected $msgid = null;
     
+    protected function fields()
+    {
+        $arrFields = parent::fields();
+        $arrFields['MsgId'] = 'setMessageId';
+        return $arrFields;
+    }
+    
     protected function setMessageId($msgid)
     {
         $this->msgid = $msgid;

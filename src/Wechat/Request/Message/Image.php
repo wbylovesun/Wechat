@@ -3,8 +3,15 @@ namespace Wechat\Request\Message;
 
 class Image extends AbstractMessage
 {
-    protected $picurl  = null;
-    protected $mediaId = null;
+    protected $picurl  = null, $mediaId = null;
+    
+    protected function fields()
+    {
+        $arrFields = parent::fields();
+        $arrFields['PicUrl']  = 'setPicUrl';
+        $arrFields['MediaId'] = 'setMediaId';
+        return $arrFields;
+    }
     
     protected function setPicUrl($picurl)
     {
@@ -26,32 +33,5 @@ class Image extends AbstractMessage
     public function getMediaId()
     {
         return $this->mediaId;
-    }
-    
-    protected function setRequestParam($param, $element)
-    {
-        switch ($param) {
-            case 'ToUserName':
-                $this->setServiceProvider($element);
-            break;
-            case 'FromUserName':
-                $this->setMessageTrigger($element);
-            break;
-            case 'CreateTime':
-                $this->setCreateTime($element);
-            break;
-            case 'MsgType':
-                $this->setMsgType($element);
-            break;
-            case 'PicUrl':
-                $this->setPicUrl($element);
-            break;
-            case 'MediaId':
-                $this->setMediaId($element);
-            break;
-            case 'MsgId':
-                $this->setMessageId($element);
-            break;
-        }
     }
 }
