@@ -1,5 +1,5 @@
 <?php
-namespace Wechat\Client\CustomMenu;
+namespace Wechat\Request\CustomMenu;
 
 use Wechat\Client\Curl;
 use Wechat\Client\Json;

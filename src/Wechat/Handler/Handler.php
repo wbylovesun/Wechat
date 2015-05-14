@@ -1,11 +1,11 @@
 <?php
 namespace Wechat\Handler;
 
-use Wechat\Request\AbstractRequest;
+use Wechat\Request\BaseMessage;
 
 class Handler extends AbstractHandler
 {
-    public function handle(AbstractRequest $event)
+    public function handle(BaseMessage $event)
     {
         if ($this->hasHandler($event)) {
             return $this->callHandler($event);

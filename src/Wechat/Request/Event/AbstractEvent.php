@@ -3,9 +3,9 @@ namespace Wechat\Request\Event;
 
 use Exception;
 use SimpleXmlElement;
-use Wechat\Request\AbstractRequest;
+use Wechat\Request\BaseMessage;
 
-abstract class AbstractEvent extends AbstractRequest
+abstract class AbstractEvent extends BaseMessage
 {
     protected $event = null;
     

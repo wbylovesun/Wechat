@@ -1,9 +1,9 @@
 <?php
 namespace Wechat\Handler;
 
-use Wechat\Request\AbstractRequest;
+use Wechat\Request\BaseMessage;
 
 interface HandlerInterface
 {
-    public function handle(AbstractRequest $request);
+    public function handle(BaseMessage $request);
 }

@@ -1,9 +1,9 @@
 <?php
 namespace Wechat\Request\Message;
 
-use Wechat\Request\AbstractRequest;
+use Wechat\Request\BaseMessage;
 
-abstract class AbstractMessage extends AbstractRequest
+abstract class AbstractMessage extends BaseMessage
 {
     protected $msgid = null;
     

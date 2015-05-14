@@ -3,7 +3,7 @@ namespace Wechat\Request;
 
 use SimpleXMLElement;
 
-abstract class AbstractRequest
+abstract class BaseMessage
 {
     const EVENT_KEY = 'event';
     

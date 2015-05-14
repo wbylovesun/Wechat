@@ -1,7 +1,7 @@
 <?php
 namespace Wechat\Handler;
 
-use Wechat\Request\AbstractRequest;
+use Wechat\Request\BaseMessage;
 use Wechat\Request\Event\AbstractEvent;
 use Wechat\Request\Message\AbstractMessage;
 
@@ -10,7 +10,7 @@ abstract class AbstractHandler implements HandlerInterface
     protected $arrEventHandlerMapper = [];
     protected $arrMessageHandlerMapper = [];
     
-    abstract public function handle(AbstractRequest $request);
+    abstract public function handle(BaseMessage $request);
     
     public function __construct()
     {
@@ -49,21 +49,21 @@ abstract class AbstractHandler implements HandlerInterface
         return $this;
     }
     
-    protected function hasHandler(AbstractRequest $request)
+    protected function hasHandler(BaseMessage $request)
     {
         $type = $request->getMsgType();
         $arrHandlerMapper = $this->getHandlerMapper($request);
         return isset($arrHandlerMapper[$type]) && is_callable($arrHandlerMapper[$type]);
     }
     
-    protected function callHandler(AbstractRequest $request)
+    protected function callHandler(BaseMessage $request)
     {
         $type = $request->getMsgType();
         $arrHandlerMapper = $this->getHandlerMapper($request);
         return call_user_func_array($arrHandlerMapper[$type], [$request]);
     }
     
-    private function getHandlerMapper(AbstractRequest $request)
+    private function getHandlerMapper(BaseMessage $request)
     {
         $type = $request->getMsgType();
         if ($request->isEvent()) {

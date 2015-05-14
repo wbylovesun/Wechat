@@ -1,5 +1,5 @@
 <?php
-namespace Wechat\Client\OpenUser;
+namespace Wechat\Request\OpenUser;
 
 abstract class AbstractOpenUser
 {
